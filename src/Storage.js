@@ -1,21 +1,22 @@
-const STORAGE_KEY = 'my_notes';
+// src/Storage.js
 
-export function saveNotes(note) {
-  const existing = loadNotes();
-  existing.push(note);
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
-  } catch (error) {
-    alert('Error saving note. Storage might be full.');
-  }
-}
+const STORAGE_KEY = 'notes-app-data';
 
-export function loadNotes() {
+export const loadNotes = () => {
   try {
     const data = localStorage.getItem(STORAGE_KEY);
     return data ? JSON.parse(data) : [];
-  } catch (error) {
-    alert('Error loading notes.');
+  } catch (err) {
+    console.error('Error loading notes:', err);
     return [];
   }
-}
+};
+
+export const saveNotes = (notes) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+  } catch (err) {
+    console.error('Error saving notes:', err);
+    throw err;
+  }
+};
