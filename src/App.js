@@ -1,27 +1,17 @@
 import React, { useState } from 'react';
 import AddNote from './components/AddNote';
 import NotesList from './components/NotesLIst';
+import './App.css'
 
 function App() {
-  const [view, setView] = useState('add');
-  const [refresh, setRefresh] = useState(false);
-
-  const handleNoteAdded = () => {
-    setRefresh(!refresh); // toggle to refresh view
-    setView('view');
-  };
+  const [currentPage, setCurrentPage] = useState('add');
 
   return (
-    <div>
-      <nav style={{ display: 'flex', justifyContent: 'center', gap: '20px', margin: '20px' }}>
-        <button onClick={() => setView('add')}>Add Note</button>
-        <button onClick={() => setView('view')}>View Notes</button>
-      </nav>
-
-      {view === 'add' ? (
-        <AddNote onNoteAdded={handleNoteAdded} />
+    <div className="App">
+      {currentPage === 'add' ? (
+        <AddNote onNavigate={setCurrentPage} />
       ) : (
-        <NotesList key={refresh} />
+        <NotesList onNavigate={setCurrentPage} />
       )}
     </div>
   );
